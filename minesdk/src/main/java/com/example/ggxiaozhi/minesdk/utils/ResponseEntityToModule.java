@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * 包名   ： com.example.ggxiaozhi.minesdk.okhttp3
  * 作者名 ： 志先生_
  * 日期   ： 2017/10/10
- * 功能   ：网络请求返回的数据转换成实体对象的工具类
+ * 功能   ：网络请求返回的数据转换成实体对象的工具类 实体类需要实现序列化接口 Serializable
  */
 public class ResponseEntityToModule
 {

@@ -28,5 +28,18 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
+
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'//异步图片加载框架universalimageloader
+
+    //retrofit基于okhttp的一个新的请求框架
+    //compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    //compile 'com.squareup.retrofit2:converter-gson:2.0.2'//与app的gson会产生冲突，
+    //compile "com.squareup.retrofit2:adapter-rxjava:2.1.0"
+    //RxJava/android相关
+    //compile 'io.reactivex:rxandroid:1.2.0'
+    //compile 'io.reactivex:rxjava:1.1.4'
+    //compile 'io.reactivex:rxjava-math:1.0.0'
+    //compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
+    //compile 'com.jakewharton.rxrelay:rxrelay:1.2.0'
     testCompile 'junit:junit:4.12'
 }

@@ -1,6 +1,7 @@
 package com.example.ggxiaozhi.minesdk.okhttp3;
 
 import com.example.ggxiaozhi.minesdk.okhttp3.https.HttpsUtils;
+import com.example.ggxiaozhi.minesdk.okhttp3.listener.DisposeDataHandle;
 import com.example.ggxiaozhi.minesdk.okhttp3.request.RequestParams;
 import com.example.ggxiaozhi.minesdk.okhttp3.response.CommonJsonCallback;
 
@@ -59,13 +60,13 @@ public class CommonOkHttpClient {
      * 发送具体的http/https请求
      *
      * @param request
-     * @param callback 请求成功后的回调
+     * @param handle  请求成功后的回调 和数据转化
      * @return
      */
-    public static Call sendRequest(Request request, CommonJsonCallback callback) {
+    public static Call sendRequest(Request request, DisposeDataHandle handle) {
 
         Call call = mHttpClient.newCall(request);
-        call.enqueue(callback);
+        call.enqueue(new CommonJsonCallback(handle));
         return call;
     }
 

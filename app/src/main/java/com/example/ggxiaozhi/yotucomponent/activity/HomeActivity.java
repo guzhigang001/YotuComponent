@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.example.ggxiaozhi.yotucomponent.R;
 import com.example.ggxiaozhi.yotucomponent.activity.base.BaseAvtivity;
-import com.example.ggxiaozhi.yotucomponent.view.fregmnet.home.HomeFragment;
-import com.example.ggxiaozhi.yotucomponent.view.fregmnet.home.MessageFragment;
-import com.example.ggxiaozhi.yotucomponent.view.fregmnet.home.MineFragment;
+import com.example.ggxiaozhi.yotucomponent.view.fragment.home.HomeFragment;
+import com.example.ggxiaozhi.yotucomponent.view.fragment.home.MessageFragment;
+import com.example.ggxiaozhi.yotucomponent.view.fragment.home.MineFragment;
 
 public class HomeActivity extends BaseAvtivity implements View.OnClickListener {
 

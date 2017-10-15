@@ -22,7 +22,7 @@ import okhttp3.Response;
  * 包名   ： com.example.ggxiaozhi.minesdk.okhttp3.response
  * 作者名 ： 志先生_
  * 日期   ： 2017/10/10
- * 功能   ：
+ * 功能   ：封装网络请求回调接口：1.请求异常处理 2.请求成功回调转实体对象
  */
 
 public class CommonJsonCallback implements Callback {
@@ -64,7 +64,7 @@ public class CommonJsonCallback implements Callback {
         mDeliveryHandler.post(new Runnable() {
             @Override
             public void run() {
-                mListener.onError(new OkHttpException(NETWORK_ERROR, e));
+                mListener.onError(new OkHttpException(NETWORK_ERROR, e.getMessage()));
             }
         });
     }
