@@ -1,25 +1,35 @@
 package com.example.ggxiaozhi.yotucomponent.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ggxiaozhi.minesdk.imageloader.ImageLoaderManager;
 import com.example.ggxiaozhi.minesdk.utils.Utils;
+import com.example.ggxiaozhi.minesdk.video.VideoAdContext;
 import com.example.ggxiaozhi.yotucomponent.R;
+import com.example.ggxiaozhi.yotucomponent.activity.CourseDetailActivity;
+import com.example.ggxiaozhi.yotucomponent.activity.PhotoViewActivity;
 import com.example.ggxiaozhi.yotucomponent.module.recommend.RecommandValue;
+import com.example.ggxiaozhi.yotucomponent.share.ShareDialog;
 import com.example.ggxiaozhi.yotucomponent.util.Util;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.sharesdk.framework.Platform;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -47,9 +57,14 @@ public class RecommendAdapter extends BaseAdapter {
     private ImageLoaderManager mLoaderManager;
 
 
-    public RecommendAdapter(Context context, List<RecommandValue> data) {
+    private VideoAdContext mAdContext;
+
+    private ListView mListView;
+
+    public RecommendAdapter(Context context, List<RecommandValue> data, ListView listView) {
         this.mContext = context;
         this.mValueList = data;
+        this.mListView = listView;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mLoaderManager = ImageLoaderManager.getInstance(context);
     }
@@ -85,7 +100,7 @@ public class RecommendAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        RecommandValue value = (RecommandValue) getItem(position);
+        final RecommandValue value = (RecommandValue) getItem(position);
         int type = getItemViewType(position);
         ViewHolder holder = null;
         if (convertView == null) {
@@ -120,8 +135,45 @@ public class RecommendAdapter extends BaseAdapter {
 
                     break;
                 case VIDOE_TYPE:
+                    //显示video卡片
                     holder = new ViewHolder();
-                    convertView = LayoutInflater.from(mContext).inflate(R.layout.item_video_layout, parent, false);
+                    convertView = mLayoutInflater.inflate(R.layout.item_video_layout, parent, false);
+                    holder.mVieoContentLayout = (RelativeLayout)
+                            convertView.findViewById(R.id.video_ad_layout);
+                    holder.mLogoView = (CircleImageView) convertView.findViewById(R.id.item_logo_view);
+                    holder.mTitleView = (TextView) convertView.findViewById(R.id.item_title_view);
+                    holder.mInfoView = (TextView) convertView.findViewById(R.id.item_info_view);
+                    holder.mFooterView = (TextView) convertView.findViewById(R.id.item_footer_view);
+                    holder.mShareView = (ImageView) convertView.findViewById(R.id.item_share_view);
+                    String json = new Gson().toJson(value);
+                    mAdContext = new VideoAdContext(holder.mVieoContentLayout, json);
+                    mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                        }
+
+                        @Override
+                        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                            mAdContext.updateVideoScollView();
+                        }
+                    });
+
+                    holder.mShareView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ShareDialog dialog = new ShareDialog(mContext, false);
+                            dialog.setShareType(Platform.SHARE_VIDEO);
+                            dialog.setShareTitle(value.title);
+                            dialog.setShareTitleUrl(value.site);
+                            dialog.setShareText(value.text);
+                            dialog.setShareSite(value.title);
+                            dialog.setShareTitle(value.site);
+                            dialog.setUrl(value.resource);
+                            dialog.show();
+
+                        }
+                    });
                     break;
                 case CARD_VIEW_PAGER:
                     holder = new ViewHolder();
@@ -133,6 +185,7 @@ public class RecommendAdapter extends BaseAdapter {
                     holder.mViewPager.setAdapter(adaper);
                     //一开始处于500的位置
                     holder.mViewPager.setCurrentItem(recommandValues.size() * 100);
+
                     break;
             }
             convertView.setTag(holder);
@@ -164,6 +217,14 @@ public class RecommendAdapter extends BaseAdapter {
                 holder.mFromView.setText(value.from);
                 holder.mZanView.setText(mContext.getString(R.string.dian_zan).concat(value.zan));
                 holder.mProductLayout.removeAllViews();//删除已有的View 否则在复用时会多余添加
+                holder.mProductLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                        intent.putStringArrayListExtra(PhotoViewActivity.PHOTO_LIST, value.url);
+                        mContext.startActivity(intent);
+                    }
+                });
                 for (int i = 0; i < value.url.size(); i++) {
                     View view = getImageView(value.url.get(i));
                     if (view != null && value.url.get(i).equals(view.getTag()))
@@ -173,6 +234,12 @@ public class RecommendAdapter extends BaseAdapter {
         }
         return convertView;
 
+    }
+
+    public void destoryVideoView() {
+        Log.d("TAG", "destoryVideoView: ");
+        if (mAdContext != null)
+            mAdContext.destroy();
     }
 
     private View getImageView(String url) {

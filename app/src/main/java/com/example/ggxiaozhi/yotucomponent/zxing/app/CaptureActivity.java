@@ -76,7 +76,8 @@ import java.util.Vector;
 /**
  * The barcode reader activity itself. This is loosely based on the
  * CameraPreview example included in the Android SDK.
- *  扫码界面Activity
+ * 扫码界面Activity
+ *
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
@@ -204,10 +205,16 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             } else if (id == R.id.qrcode_btn) {
                 // 跳转到生成二维码页面
                 Bitmap b = createQRCode();
-                Intent intent = getIntent();
-                intent.putExtra("QR_CODE", b);
-                setResult(200, intent);
-                finish();
+                if (b != null) {
+                    Toast.makeText(CaptureActivity.this, "生成二维码成功，查看请跳转我的页面", Toast.LENGTH_SHORT).show();
+                    Intent intent = getIntent();
+                    intent.putExtra("QR_CODE", b);
+                    setResult(200, intent);
+                    finish();
+                } else {
+                    Toast.makeText(CaptureActivity.this, "生成二维码失败", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
         }
@@ -239,7 +246,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 source = Source.NATIVE_APP_INTENT;
                 decodeFormats = DecodeFormatManager.parseDecodeFormats(intent);
             } else if (dataString != null && dataString.contains(PRODUCT_SEARCH_URL_PREFIX)
-                && dataString.contains(PRODUCT_SEARCH_URL_SUFFIX)) {
+                    && dataString.contains(PRODUCT_SEARCH_URL_SUFFIX)) {
                 // Scan only products and send the result to mobile Product
                 // Search.
                 source = Source.PRODUCT_SEARCH_LINK;
@@ -394,7 +401,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 paint.setStrokeWidth(4.0f);
                 drawLine(canvas, paint, points[0], points[1]);
             } else if (points.length == 4 && (rawResult.getBarcodeFormat().equals(BarcodeFormat.UPC_A))
-                || (rawResult.getBarcodeFormat().equals(BarcodeFormat.EAN_13))) {
+                    || (rawResult.getBarcodeFormat().equals(BarcodeFormat.EAN_13))) {
                 // Hacky special case -- draw two lines, for the barcode and
                 // metadata
                 drawLine(canvas, paint, points[0], points[1]);

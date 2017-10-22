@@ -9,9 +9,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -37,12 +39,6 @@ public class Utils {
         return (int) (pxValue / scale);
     }
 
-    /**
-     * 获取传入View当前在屏幕显示的比例
-     *
-     * @param pView
-     * @return 100%时返回100
-     */
     public static int getVisiblePercent(View pView) {
         if (pView != null && pView.isShown()) {
             DisplayMetrics displayMetrics = pView.getContext().getResources().getDisplayMetrics();
@@ -96,6 +92,12 @@ public class Utils {
         return result;
     }
 
+    /**
+     * 获取对应应用的版本号
+     *
+     * @param context
+     * @return
+     */
     public static String getAppVersion(Context context) {
         String version = "1.0.0"; //默认1.0.0版本
         PackageManager manager = context.getPackageManager();
@@ -169,5 +171,30 @@ public class Utils {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 获取view的屏幕属性
+     *
+     * @return
+     */
+    public static final String VIEW_INFO_EXTRA = "view_into_extra";
+    public static final String PROPNAME_SCREENLOCATION_LEFT = "propname_sreenlocation_left";
+    public static final String PROPNAME_SCREENLOCATION_TOP = "propname_sreenlocation_top";
+    public static final String PROPNAME_WIDTH = "propname_width";
+    public static final String PROPNAME_HEIGHT = "propname_height";
+
+    public static Bundle getViewProperty(View view) {
+        Bundle bundle = new Bundle();
+        int[] screenLocation = new int[2];
+        view.getLocationOnScreen(screenLocation); //获取view在整个屏幕中的位置
+        bundle.putInt(PROPNAME_SCREENLOCATION_LEFT, screenLocation[0]);
+        bundle.putInt(PROPNAME_SCREENLOCATION_TOP, screenLocation[1]);
+        bundle.putInt(PROPNAME_WIDTH, view.getWidth());
+        bundle.putInt(PROPNAME_HEIGHT, view.getHeight());
+
+        Log.e("Utils", "Left: " + screenLocation[0] + " Top: " + screenLocation[1]
+                + " Width: " + view.getWidth() + " Height: " + view.getHeight());
+        return bundle;
     }
 }

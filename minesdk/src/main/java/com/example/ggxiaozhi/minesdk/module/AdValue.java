@@ -1,18 +1,21 @@
 package com.example.ggxiaozhi.minesdk.module;
 
 
-
 import com.example.ggxiaozhi.minesdk.module.monitor.Monitor;
 import com.example.ggxiaozhi.minesdk.module.monitor.emevent.EMEvent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+
 /**
- * @author: qndroid
- * @function: 广告json value节点， 节点名字记得修改一下
- * @date: 16/6/13
+ * 工程名 ： YotuComponent
+ * 包名   ： com.example.ggxiaozhi.minesdk.video
+ * 作者名 ： 志先生_
+ * 日期   ： 2017/10/16
+ * 功能   ：视频信息实体类
  */
-public class AdValue {
+public class AdValue implements Serializable{
 
     public String resourceID;
     public String adid;

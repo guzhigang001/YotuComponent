@@ -9,6 +9,13 @@ import android.widget.ProgressBar;
 import com.example.ggxiaozhi.yotucomponent.R;
 
 
+/**
+ * 工程名 ： YotuComponent
+ * 包名   ： com.example.ggxiaozhi.store.the_basket.view.widget
+ * 作者名 ： 志先生_
+ * 日期   ： 2017/9/2
+ * 功能   ：待进度条的webView
+ */
 public class ProgressWebView extends WebView {
 
     private ProgressBar progressbar;

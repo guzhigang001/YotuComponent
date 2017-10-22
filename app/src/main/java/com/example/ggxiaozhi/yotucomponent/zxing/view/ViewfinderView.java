@@ -72,7 +72,7 @@ public final class ViewfinderView extends View {
     /**
      * 白色边框偏移量
      */
-    private static final int CORNER_OFFEST = 6;
+    private static final int CORNER_OFFEST = 1;
     /**
      * 移动光线每秒的移动距离
      */

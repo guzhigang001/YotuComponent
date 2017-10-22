@@ -23,12 +23,12 @@ public class HttpConstants {
     /**
      * 登陆接口
      */
-    public static String LOGIN = ROOT_URL + "user_info.json";
+    public static String LOGIN = ROOT_URL + "/user_info.json";
 
     /**
      * 检查更新接口
      */
-    public static String CHECK_UPDATE = ROOT_URL + "update.json";
+    public static String CHECK_UPDATE = ROOT_URL + "/update.json";
 
     /**
      * 首页产品请求接口
@@ -38,5 +38,5 @@ public class HttpConstants {
     /**
      * 课程详情接口
      */
-    public static String COURSE_DETAIL = ROOT_URL + "course_detail.json";
+    public static String COURSE_DETAIL = ROOT_URL + "/course_detail.json";
 }

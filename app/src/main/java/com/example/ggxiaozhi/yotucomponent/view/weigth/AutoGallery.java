@@ -11,11 +11,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * 工程名 ： BaiLan
+ * 工程名 ： YotuComponent
  * 包名   ： com.example.ggxiaozhi.store.the_basket.view.widget
  * 作者名 ： 志先生_
  * 日期   ： 2017/9/2
- * 时间   ： 19:31
  * 功能   ：轮播图图片存放的画廊(Gallery)
  */
 

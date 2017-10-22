@@ -18,7 +18,11 @@ android {
         }
     }
 }
-
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -27,8 +31,28 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
+    //OkHttp3
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    //圆角图片
+    //http://blog.csdn.net/zuiwuyuan/article/details/50100093 https://github.com/gyf-dev/ImmersionBar
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    //动态设置状态栏颜色
+    compile 'com.github.chrisbanes:PhotoView:1.2.6'
+    //PhotoView
+    compile 'com.r0adkll:slidableactivity:2.0.5'
+    //滑动关闭Activity库
     testCompile 'junit:junit:4.12'
     compile project(':minesdk')
     compile files('libs/zxing.jar')
+    compile files('libs/MobCommons-2016.0811.1207.jar')
+    compile files('libs/MobTools-2016.0811.1207.jar')
+    compile files('libs/ShareSDK-Core-2.7.5.jar')
+    compile files('libs/ShareSDK-QQ-2.7.5.jar')
+    compile files('libs/ShareSDK-QZone-2.7.5.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.5.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.5.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.5.jar')
+    compile files('libs/mpchart.jar')
+    compile files('libs/jpush-android-3.0.9.jar')
+    compile files('libs/jcore-android-1.1.7.jar')
 }

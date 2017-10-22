@@ -16,8 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ggxiaozhi.yotucomponent.R;
+import com.example.ggxiaozhi.yotucomponent.activity.base.BaseAvtivity;
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends BaseAvtivity {
 
     private TextView mTextView;
     private ImageView mImageView;
@@ -27,6 +28,7 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+        changeStatusBarColor(R.color.color_titleBar);
         mTextView = (TextView) findViewById(R.id.title_text);
         mImageView = (ImageView) findViewById(R.id.iv_search);
         mWebView = (WebView) findViewById(R.id.wv);
@@ -61,7 +63,14 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
         mWebView.getSettings().setJavaScriptEnabled(true);//支持javaScrip
-        mWebView.loadUrl(url);
+        mWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+        if (url.contains("http") || url.contains("https"))
+            mWebView.loadUrl(url);
+        else
+//            mWebView.loadData(url, "text/html", "UTF -8");//API提供的标准用法，无法解决乱码问题
+            mWebView.loadData(url, "text/html; charset=UTF-8", null);//这种写法可以正确解码
+
+
         mWebView.setDownloadListener(new MyWebViewDownLoadListener());
 
     }

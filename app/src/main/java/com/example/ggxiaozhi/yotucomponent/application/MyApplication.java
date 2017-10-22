@@ -2,6 +2,12 @@ package com.example.ggxiaozhi.yotucomponent.application;
 
 import android.app.Application;
 
+import com.example.ggxiaozhi.yotucomponent.share.ShareManager;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.sharesdk.framework.ShareSDK;
+
+
 /**
  * 工程名 ： YotuComponent
  * 包名   ： com.example.ggxiaozhi.yotucomponent.application
@@ -17,9 +23,20 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         myApplication = this;
+        initShareSDK();
+        initJPush();
     }
 
     public static MyApplication getInstance() {
         return myApplication;
+    }
+
+    public void initShareSDK() {
+        ShareManager.init(this);
+    }
+
+    public void initJPush() {
+        JPushInterface.setDebugMode(true);//如果上线的话港城false
+        JPushInterface.init(this);
     }
 }

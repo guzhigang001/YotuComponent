@@ -18,7 +18,6 @@ import com.example.ggxiaozhi.yotucomponent.R;
  * 包名   ： com.example.ggxiaozhi.store.the_basket.banner
  * 作者名 ： 志先生_
  * 日期   ： 2017/9/2
- * 时间   ： 19:27
  * 功能   ：自动播放Gallery指示器(原点)
  */
 

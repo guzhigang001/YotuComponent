@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class HomeActivity extends BaseAvtivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeStatusBarColor(R.color.color_fed952);
         setContentView(R.layout.activity_home_layout);
 
 
@@ -88,20 +90,21 @@ public class HomeActivity extends BaseAvtivity implements View.OnClickListener {
         FragmentTransaction transaction = fm.beginTransaction();
         switch (v.getId()) {
             case R.id.home_layout_view:
+                changeStatusBarColor(R.color.color_fed952);
                 mHomeView.setBackgroundResource(R.drawable.comui_tab_home_selected);
                 mMessageView.setBackgroundResource(R.drawable.comui_tab_message);
                 mMineView.setBackgroundResource(R.drawable.comui_tab_person);
-
                 hideFragment(transaction, mMessageFragment);
                 hideFragment(transaction, mMineFragment);
                 if (mHomeFragment == null) {
                     mHomeFragment = new HomeFragment();
-                    transaction.add(R.id.content_layout,mHomeFragment);
+                    transaction.add(R.id.content_layout, mHomeFragment);
                 } else {
                     transaction.show(mHomeFragment);
                 }
                 break;
             case R.id.message_layout_view:
+                changeStatusBarColor(R.color.color_e3e3e3);
                 mHomeView.setBackgroundResource(R.drawable.comui_tab_home);
                 mMessageView.setBackgroundResource(R.drawable.comui_tab_message_selected);
                 mMineView.setBackgroundResource(R.drawable.comui_tab_person);
@@ -109,12 +112,13 @@ public class HomeActivity extends BaseAvtivity implements View.OnClickListener {
                 hideFragment(transaction, mMineFragment);
                 if (mMessageFragment == null) {
                     mMessageFragment = new MessageFragment();
-                    transaction.add(R.id.content_layout,mMessageFragment);
+                    transaction.add(R.id.content_layout, mMessageFragment);
                 } else {
                     transaction.show(mMessageFragment);
                 }
                 break;
             case R.id.mine_layout_view:
+                changeStatusBarColor(R.color.white);
                 mHomeView.setBackgroundResource(R.drawable.comui_tab_home);
                 mMessageView.setBackgroundResource(R.drawable.comui_tab_message);
                 mMineView.setBackgroundResource(R.drawable.comui_tab_person_selected);
@@ -122,12 +126,19 @@ public class HomeActivity extends BaseAvtivity implements View.OnClickListener {
                 hideFragment(transaction, mHomeFragment);
                 if (mMineFragment == null) {
                     mMineFragment = new MineFragment();
-                    transaction.add(R.id.content_layout,mMineFragment);
+                    transaction.add(R.id.content_layout, mMineFragment);
                 } else {
                     transaction.show(mMineFragment);
                 }
                 break;
         }
         transaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy: ");
+        super.onDestroy();
+
     }
 }

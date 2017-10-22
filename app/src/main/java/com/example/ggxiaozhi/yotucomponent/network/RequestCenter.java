@@ -6,6 +6,9 @@ import com.example.ggxiaozhi.minesdk.okhttp3.listener.DisposeDataListener;
 import com.example.ggxiaozhi.minesdk.okhttp3.request.CommonRequest;
 import com.example.ggxiaozhi.minesdk.okhttp3.request.RequestParams;
 import com.example.ggxiaozhi.yotucomponent.module.BaseRecommandModel;
+import com.example.ggxiaozhi.yotucomponent.module.course.BaseCourseModel;
+import com.example.ggxiaozhi.yotucomponent.module.update.UpdateModel;
+import com.example.ggxiaozhi.yotucomponent.module.user.User;
 
 /**
  * 工程名 ： YotuComponent
@@ -31,6 +34,27 @@ public class RequestCenter {
     }
 
     public static void requestRecommandData(DisposeDataListener listener) {
-        getData(HttpConstants.HOME_RECOMMAND, null, listener, BaseRecommandModel.class);
+        RequestCenter.getData(HttpConstants.HOME_RECOMMAND, null, listener, BaseRecommandModel.class);
+    }
+
+    public static void checkVersion(DisposeDataListener listener) {
+        RequestCenter.getData(HttpConstants.CHECK_UPDATE, null, listener, UpdateModel.class);
+    }
+
+    public static void login(String userName, String passwd, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("mb", userName);
+        params.put("pwd", passwd);
+        RequestCenter.getData(HttpConstants.LOGIN, null, listener, User.class);
+    }
+    /**
+     * 请求课程详情
+     *
+     * @param listener
+     */
+    public static void requestCourseDetail(String courseId, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("courseId", courseId);
+        RequestCenter.getData(HttpConstants.COURSE_DETAIL, params, listener, BaseCourseModel.class);
     }
 }

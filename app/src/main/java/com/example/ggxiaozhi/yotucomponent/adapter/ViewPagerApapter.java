@@ -1,6 +1,7 @@
 package com.example.ggxiaozhi.yotucomponent.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.ggxiaozhi.minesdk.imageloader.ImageLoaderManager;
 import com.example.ggxiaozhi.yotucomponent.R;
+import com.example.ggxiaozhi.yotucomponent.activity.CourseDetailActivity;
 import com.example.ggxiaozhi.yotucomponent.module.recommend.RecommandValue;
 
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.List;
  * 包名   ： com.example.ggxiaozhi.yotucomponent.adapter
  * 作者名 ： 志先生_
  * 日期   ： 2017/10/13
- * 功能   ：
+ * 功能   ：无限ViewPager适配器
  */
 
 public class ViewPagerApapter extends PagerAdapter {
@@ -67,7 +69,14 @@ public class ViewPagerApapter extends PagerAdapter {
         imageViews[0] = (ImageView) rootView.findViewById(R.id.image_one);
         imageViews[1] = (ImageView) rootView.findViewById(R.id.image_two);
         imageViews[2] = (ImageView) rootView.findViewById(R.id.image_three);
-
+        rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CourseDetailActivity.class);
+                intent.putExtra(CourseDetailActivity.COURSE_ID, value.adid);
+                mContext.startActivity(intent);
+            }
+        });
 
         titleView.setText(value.title);
         infoView.setText(value.price);

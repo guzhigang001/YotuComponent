@@ -1,9 +1,11 @@
 package com.example.ggxiaozhi.yotucomponent.view.fragment.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ggxiaozhi.minesdk.okhttp3.listener.DisposeDataListener;
 import com.example.ggxiaozhi.minesdk.utils.Utils;
 import com.example.ggxiaozhi.yotucomponent.R;
+import com.example.ggxiaozhi.yotucomponent.activity.PhotoViewActivity;
 import com.example.ggxiaozhi.yotucomponent.activity.WebViewActivity;
 import com.example.ggxiaozhi.yotucomponent.adapter.RecommendAdapter;
 import com.example.ggxiaozhi.yotucomponent.constant.Constant;
@@ -95,7 +99,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             ArrayList<RecommandValue> recommandValues = new ArrayList<>();
             recommandValues.addAll(recommandData.data.list);
             recommandValues.addAll(recommandData.data.list);
-            mAdapter = new RecommendAdapter(mContext, recommandValues);
+            mAdapter = new RecommendAdapter(mContext, recommandValues, mListView);
             mController.setData(recommandData.data.head.ads);
             mListView.addHeaderView(mController.getContentView());
             mListView.setAdapter(mAdapter);
@@ -116,6 +120,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
 
     private void initView() {
+
         mQRCodeView = (TextView) mContentView.findViewById(R.id.qrcode_view);
         mQRCodeView.setOnClickListener(this);
         mCategoryView = (TextView) mContentView.findViewById(R.id.category_view);
@@ -156,17 +161,52 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_QRCODE:
-                String code = data.getStringExtra("SCAN_RESULT");
-                Log.d(TAG, "onActivityResult:----> " + code);
-                Intent intent = new Intent(mContext, WebViewActivity.class);
-                intent.putExtra("url", code);
-                startActivity(intent);
+                if (resultCode == Activity.RESULT_OK) {
+                    String code = data.getStringExtra("SCAN_RESULT");
+                    Log.d(TAG, "onActivityResult:----> " + code);
+                    if (code.contains("http") || code.contains("https")) {
+                        Intent intent = new Intent(mContext, WebViewActivity.class);
+                        intent.putExtra("url", code);
+                        startActivity(intent);
+                    } else if ((!code.contains("http") || !code.contains("https")) && code != null && TextUtils.isEmpty(code)) {
+                        Intent intent = new Intent(mContext, WebViewActivity.class);
+                        intent.putExtra("url", code);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(mContext, "无法解析", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                if (resultCode == 300) {
+                    String code = data.getStringExtra("result");
+                    Log.d(TAG, "onActivityResult:---->result " + code);
+                    Intent intent = new Intent(mContext, WebViewActivity.class);
+                    intent.putExtra("url", code);
+                    startActivity(intent);
+                }
+                if (requestCode == 200) {
+                    String code = data.getStringExtra("result");
+                    Log.d(TAG, "onActivityResult:---->result " + code);
+                }
                 break;
         }
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        RecommandValue value = (RecommandValue) mAdapter.getItem(position - mListView.getHeaderViewsCount());
+        if (value.type != 0) {
+            Intent intent = new Intent(mContext, PhotoViewActivity.class);
+            intent.putStringArrayListExtra(PhotoViewActivity.PHOTO_LIST, value.url);
+            startActivity(intent);
+        }
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        if (mAdapter != null)
+//            mAdapter.destoryVideoView();
     }
 }
