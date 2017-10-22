@@ -5,7 +5,6 @@ import android.app.Application;
 import com.example.ggxiaozhi.yotucomponent.share.ShareManager;
 
 import cn.jpush.android.api.JPushInterface;
-import cn.sharesdk.framework.ShareSDK;
 
 
 /**

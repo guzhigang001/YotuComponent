@@ -2,20 +2,19 @@ package com.example.ggxiaozhi.yotucomponent.activity;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.example.ggxiaozhi.minesdk.okhttp3.listener.DisposeDataListener;
 import com.example.ggxiaozhi.yotucomponent.R;
 import com.example.ggxiaozhi.yotucomponent.activity.base.BaseAvtivity;
 import com.example.ggxiaozhi.yotucomponent.manager.UserManager;
+import com.example.ggxiaozhi.yotucomponent.module.PushMessage;
 import com.example.ggxiaozhi.yotucomponent.module.user.User;
 import com.example.ggxiaozhi.yotucomponent.network.RequestCenter;
 import com.example.ggxiaozhi.yotucomponent.view.weigth.MailBoxAssociateTokenizer;
@@ -39,8 +38,9 @@ public class LoginActivity extends BaseAvtivity implements View.OnClickListener 
     /**
      * data
      */
-//    private PushMessage mPushMessage; // 推送过来的消息
-//    private boolean fromPush; // 是否从推送到此页面
+    private PushMessage mPushMessage; // 推送过来的消息
+    private boolean fromPush; // 是否从推送到此页面
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +51,11 @@ public class LoginActivity extends BaseAvtivity implements View.OnClickListener 
     }
 
     private void initData() {
-//        Intent intent = getIntent();
-//        if (intent.hasExtra("pushMessage")) {
-//            mPushMessage = (PushMessage) intent.getSerializableExtra("pushMessage");
-//        }
-//        fromPush = intent.getBooleanExtra("fromPush", false);
+        Intent intent = getIntent();
+        if (intent.hasExtra("pushMessage")) {
+            mPushMessage = (PushMessage) intent.getSerializableExtra("pushMessage");
+        }
+        fromPush = intent.getBooleanExtra("formPush", false);
     }
 
     private void initView() {
@@ -105,6 +105,11 @@ public class LoginActivity extends BaseAvtivity implements View.OnClickListener 
                     Log.d(TAG, "onSuccess: ");
                     //登录成功通知应用其他模块 发送局部广播
                     sendLoginLocalBroadCast();
+                    if (fromPush) {
+                        Intent intent = new Intent(LoginActivity.this, PushMessageActivity.class);
+                        intent.putExtra("message", mPushMessage);
+                        startActivity(intent);
+                    }
                     finish();
                 }
 
@@ -122,7 +127,6 @@ public class LoginActivity extends BaseAvtivity implements View.OnClickListener 
      */
     private void insertUserInfoIntoDB() {
     }
-
 
 
     /**

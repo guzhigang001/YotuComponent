@@ -1,40 +1,62 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/color_e3e3e3"
-              android:orientation="vertical"
-    >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
     <RelativeLayout
+        android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        >
-
-        <ImageView
-            android:id="@+id/back_view"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/comment_back_normal"
-            />
+        android:background="@color/color_e3e3e3">
 
         <TextView
-            android:id="@+id/title_vaiew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/xitong_message"
+            android:text="@string/jpush_message_title"
             android:textColor="@color/color_333333"
-            android:textSize="22sp"
-            />
+            android:textSize="22sp" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alwaysDrawnWithCache="false"
-        android:divider="@color/color_e3e3e3"
-        />
-</LinearLayout>
+    <TextView
+        android:id="@+id/message_type_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_layout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/jpush_message_type"
+        android:textColor="@color/color_333333"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/message_type_value_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/message_type_view"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/message_type_view"
+        android:textColor="@color/color_333333"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/message_content_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/message_type_view"
+        android:layout_below="@id/message_type_view"
+        android:layout_marginTop="20dp"
+        android:text="@string/jpush_message_content"
+        android:textColor="@color/color_333333"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/message_content_value_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/message_content_view"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/message_content_view"
+        android:textColor="@color/color_333333"
+        android:textSize="20sp" />
+</RelativeLayout>

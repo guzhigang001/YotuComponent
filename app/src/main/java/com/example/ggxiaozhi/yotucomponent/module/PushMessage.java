@@ -2,6 +2,8 @@ package com.example.ggxiaozhi.yotucomponent.module;
 
 import com.example.ggxiaozhi.yotucomponent.user.BaseModel;
 
+import java.io.Serializable;
+
 /**
  * 工程名 ： YotuComponent
  * 包名   ： com.example.ggxiaozhi.yotucomponent.module
@@ -10,7 +12,7 @@ import com.example.ggxiaozhi.yotucomponent.user.BaseModel;
  * 功能   ：极光推送消息实体，包含所有的数据字段。
  */
 
-public class PushMessage extends BaseModel{
+public class PushMessage implements Serializable {
 
     // 消息类型 2表示需要登录
     public String messageType = null;

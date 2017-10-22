@@ -1,5 +1,6 @@
 package com.example.ggxiaozhi.yotucomponent.util;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * 工程名 ： YotuComponent
@@ -138,5 +140,25 @@ public class Util {
     public static void hasError() {
         String error = "error";
         Log.e("Util", error);
+    }
+
+    /**
+     * 这个是真正的获取指定包名的应用程序是否在运行(无论前台还是后台)
+     *
+     * @return
+     */
+    public static boolean getCurrentTask(Context context) {
+
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> appProcessInfos = activityManager.getRunningTasks(50);
+        for (ActivityManager.RunningTaskInfo process : appProcessInfos) {
+
+            if (process.baseActivity.getPackageName().equals(context.getPackageName())
+                    || process.topActivity.getPackageName().equals(context.getPackageName())) {
+
+                return true;
+            }
+        }
+        return false;
     }
 }
