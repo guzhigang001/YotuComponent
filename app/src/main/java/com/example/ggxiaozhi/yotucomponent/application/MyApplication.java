@@ -3,6 +3,7 @@ package com.example.ggxiaozhi.yotucomponent.application;
 import android.app.Application;
 
 import com.example.ggxiaozhi.yotucomponent.share.ShareManager;
+import com.umeng.analytics.MobclickAgent;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -24,6 +25,7 @@ public class MyApplication extends Application {
         myApplication = this;
         initShareSDK();
         initJPush();
+        initUMeng();
     }
 
     public static MyApplication getInstance() {
@@ -35,7 +37,12 @@ public class MyApplication extends Application {
     }
 
     public void initJPush() {
-        JPushInterface.setDebugMode(true);//如果上线的话港城false
+        JPushInterface.setDebugMode(true);//如果上线的话改成false
         JPushInterface.init(this);
+    }
+
+    public void initUMeng() {
+        MobclickAgent.setDebugMode(true);//未上线调试
+        MobclickAgent.openActivityDurationTrack(false);//不需要跟踪应用的执行轨迹
     }
 }

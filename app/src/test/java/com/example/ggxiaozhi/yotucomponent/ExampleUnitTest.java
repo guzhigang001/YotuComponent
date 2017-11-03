@@ -1,5 +1,7 @@
 package com.example.ggxiaozhi.yotucomponent;
 
+import android.support.v4.content.ContextCompat;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

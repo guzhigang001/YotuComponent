@@ -1,4 +1,4 @@
-package com.example.ggxiaozhi.yotucomponent.zxing.util;
+package com.example.ggxiaozhi.yotucomponent.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

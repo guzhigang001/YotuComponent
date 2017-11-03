@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
-import com.example.ggxiaozhi.yotucomponent.zxing.util.StatusBarUtil;
+import com.example.ggxiaozhi.yotucomponent.util.StatusBarUtil;
 
 /**
  * 工程名 ： YotuComponent

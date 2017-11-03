@@ -66,23 +66,24 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
         mXAdInstance = value;
         mVideoView = customVideoView;
         mPosition = position;
+        mContext = context;
 
     }
 
-    /**
-     * 初始化控件
-     *
-     * @param savedInstanceState
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.xadsdk_dialog_video_layout);
-        initVideoView();
-    }
+        /**
+         * 初始化控件
+         *
+         * @param savedInstanceState
+         */
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.xadsdk_dialog_video_layout);
+            initVideoView();
+        }
 
     private void initVideoView() {
 
@@ -166,9 +167,11 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
         }
         isFirst = false;
     }
+
     public void setSlotListener(VideoAdSlot.AdSDKSlotListener slotListener) {
         this.mSlotListener = slotListener;
     }
+
     @Override
     public void dismiss() {
         Log.d(TAG, "dismiss: ");

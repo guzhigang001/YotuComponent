@@ -202,8 +202,8 @@ public class CustomVideoView extends RelativeLayout implements
      */
     @Override
     protected void onVisibilityChanged(View changedView, int visibility) {
-        Log.d(TAG, "onVisibilityChanged: " + visibility);
         super.onVisibilityChanged(changedView, visibility);
+        Log.d(TAG, "onVisibilityChanged: " + visibility);
         if (visibility == VISIBLE && playerState == STATE_PAUSING) {
             if (isRealPause() || isComplete()) {
                 //表示播放完成 后的暂停状态
@@ -386,7 +386,7 @@ public class CustomVideoView extends RelativeLayout implements
         showPauseOrPlayView(false);
         handle.removeCallbacksAndMessages(null);
     }
-    //全屏不显示暂停状态,后续可以整合，不必单独出一个方法
+
     public void pauseForFullScreen() {
         if (playerState != STATE_PLAYING) {
             return;
@@ -400,6 +400,7 @@ public class CustomVideoView extends RelativeLayout implements
         }
         handle.removeCallbacksAndMessages(null);
     }
+
     /**
      * 恢复我们的视频
      */
@@ -412,7 +413,7 @@ public class CustomVideoView extends RelativeLayout implements
         if (!isPlaying()) {
             entryResumeState();//置为播放中状态的值
             mediaPlayer.start();
-            handle.sendEmptyMessageAtTime(TIME_MSG, TIME_INVAL);
+            handle.sendEmptyMessage(TIME_MSG);
             showPauseOrPlayView(true);
         } else {
             showPauseOrPlayView(false);
@@ -479,8 +480,6 @@ public class CustomVideoView extends RelativeLayout implements
             showPauseOrPlayView(false);
         }
     }
-
-
 
 
     /**
@@ -570,8 +569,8 @@ public class CustomVideoView extends RelativeLayout implements
         if (mScreenReceiver == null) {
             mScreenReceiver = new ScreenEventReceiver();
             IntentFilter filter = new IntentFilter();
-            filter.addAction(Intent.ACTION_SCREEN_OFF);
-            filter.addAction(Intent.ACTION_USER_PRESENT);
+            filter.addAction(Intent.ACTION_SCREEN_OFF);//锁屏广播
+            filter.addAction(Intent.ACTION_USER_PRESENT);//解锁广播
             getContext().registerReceiver(mScreenReceiver, filter);
         }
     }
@@ -662,7 +661,7 @@ public class CustomVideoView extends RelativeLayout implements
     }
 
     /**
-     * 异步加载定帧图
+     * 异步加载暂停时的图片
      */
     private void loadFrameImage() {
         if (mFrameLoadListener != null) {

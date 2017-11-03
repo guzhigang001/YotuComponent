@@ -37,11 +37,10 @@ public class BaseFragment extends Fragment {
      * 判断是否有指定的权限
      */
     public boolean hasPermission(String... permissions) {
-        for (String permisson : permissions) {
-            if (ContextCompat.checkSelfPermission(getActivity(), permisson)
-                    != PackageManager.PERMISSION_GRANTED) {
+
+        for (String pers : permissions) {
+            if (ContextCompat.checkSelfPermission(mContext, pers) != PackageManager.PERMISSION_GRANTED)
                 return false;
-            }
         }
         return true;
     }

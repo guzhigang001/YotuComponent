@@ -1,5 +1,6 @@
 package com.example.ggxiaozhi.yotucomponent.view.fragment.home;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import com.example.ggxiaozhi.yotucomponent.R;
 import com.example.ggxiaozhi.yotucomponent.activity.LoginActivity;
 import com.example.ggxiaozhi.yotucomponent.activity.SettingActivity;
 import com.example.ggxiaozhi.yotucomponent.application.MyApplication;
+import com.example.ggxiaozhi.yotucomponent.constant.Constant;
 import com.example.ggxiaozhi.yotucomponent.manager.UserManager;
 import com.example.ggxiaozhi.yotucomponent.module.update.UpdateModel;
 import com.example.ggxiaozhi.yotucomponent.network.RequestCenter;
@@ -125,7 +127,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.update_view:
-                checkVersion();
+
+                if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    checkVersion();
+                } else {
+                    requestPermission(Constant.SCARD_CODE, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
+                }
+
                 break;
             case R.id.login_layout:
             case R.id.login_view:
@@ -207,6 +215,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         super.onDestroy();
         unregisterBroadCastReceiver();
 
+    }
+
+    @Override
+    protected void doWriteSDCard() {
+        checkVersion();
     }
 
     /**

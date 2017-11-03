@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/mraid_content_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mraid_content_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
->
+    >
 
     <TextureView
         android:id="@+id/xadsdk_player_video_textureView"
@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:duplicateParentState="true"
-    />
-
+        />
+    <!--如果希望点击父控件子控件也响应的话, 可以给子控件加如下属性:
+     android:duplicateParentState="true" -->
     <ImageView
         android:id="@+id/framing_view"
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
         android:scaleType="fitCenter"
         android:src="@drawable/xadsdk_img_error"
         android:visibility="gone"
-    />
+        />
 
     <ImageView
         android:id="@+id/xadsdk_to_full_view"
@@ -36,7 +37,7 @@
         android:scaleType="center"
         android:src="@drawable/xadsdk_ad_mini"
 
-    />
+        />
 
     <Button
         android:id="@+id/xadsdk_small_play_btn"
@@ -45,7 +46,7 @@
         android:layout_centerInParent="true"
         android:background="@drawable/xadsdk_ad_play"
         android:visibility="gone"
-    />
+        />
 
     <ImageView
         android:id="@+id/loading_bar"
@@ -53,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@drawable/xadsdk_ad_loading_anim"
-    />
+        />
     <!--<ViewStub-->
     <!--android:id="@+id/small_view_stub"-->
     <!--android:layout_width="match_parent"-->

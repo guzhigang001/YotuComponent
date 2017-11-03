@@ -10,11 +10,65 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yotu"]//替换AndroidManifestfest值 设置默认值 为款官方渠道
     }
+
+    //签名文件配置
+    signingConfigs {
+        debug {
+
+        }
+        release {
+            storeFile file("yotu.jks")
+            storePassword "199402"
+            keyAlias "yotu"
+            keyPassword "199402"
+        }
+    }
+    //当前打包版本
     buildTypes {
+        //要发布的版本
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //使用签名文件配置
+            signingConfig signingConfigs.release
+
+            //指定我们release包的输出文件名就是我们的渠道名字
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith(".apk")) {
+
+                        def fileName = "${variant.productFlavors[0].name}" + ".apk"
+                        output.outputFile = new File(outputFile.parent, fileName);
+                    }
+                }
+            }
+        }
+    }
+
+    //支持所有的渠道
+    productFlavors {
+        //配置官方渠道
+        yotu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yotu"]
+            resValue("string","name","yotu")
+        }
+        //配置谷歌市场渠道
+        goolgeplayer {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "goolgeplayer"]
+            resValue("string","name","goolgeplayer")
+        }
+
+        baidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+            resValue("string","name","baidu")
+        }
+
+        //遍历所有的渠道 更改友盟统计的Value 为了获取对应渠道下载统计
+        productFlavors.all {
+            flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
     }
     //使AS知道.so文件的位置
@@ -28,6 +82,11 @@ allprojects {
     repositories {
         maven { url "https://jitpack.io" }
     }
+//    gradle.projectsEvaluated {
+//        tasks.withType(JavaCompile) {
+//            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+//        }
+//    }
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -36,6 +95,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.umeng.analytics:analytics:latest.integration'//友盟
+
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     //OkHttp3
     compile 'de.hdodenhof:circleimageview:2.1.0'

@@ -220,8 +220,8 @@
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <meta-data android:name="JPUSH_APPKEY" android:value="8f92cee5147c1994cc676718" /> <!--  </>值来自开发者平台取得的AppKey-->
 
-
-
+        <meta-data android:value="YOUR_APP_KEY" android:name="59ec7f4e07fe651a6c000163"/>
+        <meta-data android:value="Channel ID" android:name="${UMENG_CHANNEL_VALUE}"/>
 
     </application>
 

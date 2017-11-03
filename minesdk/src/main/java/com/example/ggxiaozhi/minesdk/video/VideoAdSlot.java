@@ -126,11 +126,6 @@ public class VideoAdSlot implements CustomVideoView.ADVideoPlayerListener {
     @Override
     public void onClickFullScreenBtn() {
 
-        try {
-            ReportManager.fullScreenReport(mVideoInfo.event.full.content, getPosition());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         //获取videoview在当前界面的属性
         Bundle bundle = Utils.getViewProperty(mParentView);
@@ -186,7 +181,7 @@ public class VideoAdSlot implements CustomVideoView.ADVideoPlayerListener {
 
     @Override
     public void onClickVideo() {
-        String desationUrl = mVideoInfo.clickUrl;
+        String desationUrl = "http://blog.csdn.net/gg199402?viewmode=contents";
         if (mSlotListener != null) {
             if (mVideoView.isFrameHidden() && !TextUtils.isEmpty(desationUrl)) {
                 mSlotListener.onClickVideo(desationUrl);
